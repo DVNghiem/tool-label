@@ -51,7 +51,9 @@ class MainWindow:
 
         self.frameTop.grid(row=0, column=0, pady=10)
 
-        self.canvas = tk.Canvas(window, width=550, height=350,)
+        self.canvas = tk.Canvas(window, width=550, height=350)
+        self.canvas.create_text(300, self.frameTop.winfo_height()+50, fill="darkblue", font="Times 20 italic bold",
+                                text="Coded by Nghiem")
         self.canvas.grid(row=1, column=0)
 
     def resize_image(self, img):
