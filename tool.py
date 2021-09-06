@@ -67,6 +67,7 @@ class MainWindow:
             label = self.label[image_name]
             self.combobox.set(label)
 
+        self.window.title(image_name)
         image_name = os.path.join(self.folder, image_name)
         img = Image.open(image_name)
         img = self.resize_image(img)
@@ -91,7 +92,7 @@ class MainWindow:
         self.setImageCanvas(fileName)
 
     def addLabel(self):
-        label = simpledialog.askstring(title='Lable', prompt='Nhap label: ')
+        label = simpledialog.askstring(title='Label', prompt='Nhap label: ')
         if label is None:
             return
         if label not in self.combobox['values']:
