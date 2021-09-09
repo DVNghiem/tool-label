@@ -21,8 +21,11 @@ class MainWindow:
         self.btnOpen = tk.Button(
             frameLeft, text='Open Folder', command=self.openFolder)
         self.btnSave = tk.Button(frameLeft, text='Save', command=self.save)
+        self.btnDelete = tk.Button(
+            frameLeft, text='Delete', command=self.delete)
         self.btnOpen.grid(row=0, column=0, ipadx=10)
         self.btnSave.grid(row=1, column=0, ipadx=30, pady=10)
+        self.btnDelete.grid(row=2, column=0, ipadx=25)
         frameLeft.grid(row=0, column=0, sticky="ew", padx=(10, 30), pady=10)
 
         # top right
@@ -55,6 +58,20 @@ class MainWindow:
         self.canvas.create_text(300, self.frameTop.winfo_height()+50, fill="darkblue", font="Times 20 italic bold",
                                 text="Coded by Nghiem")
         self.canvas.grid(row=1, column=0)
+
+        # key
+        self.window.bind('<Left>', self.keyLeft)
+        self.window.bind('<Right>', self.keyRight)
+        self.window.bind('<Escape>', self.keyDelete)
+
+    def keyLeft(self, event):
+        self.back()
+
+    def keyRight(self, event):
+        self.next()
+
+    def keyDelete(self, event):
+        self.delete()
 
     def resize_image(self, img):
         while img.size[0] > 550 or img.size[0] > 350:
@@ -134,6 +151,16 @@ class MainWindow:
         df = pd.DataFrame(data)
         df.to_csv(file.name, index=None, header=None)
         messagebox.showinfo("Info", "Lưu thành công")
+
+    def delete(self):
+        os.remove(os.path.join(
+            self.folder, self.path_images[self.current_image_index]))
+        del self.path_images[self.current_image_index]
+        if len(self.path_images) == self.current_image_index:
+            self.current_image_index = 0
+
+        image = self.path_images[self.current_image_index]
+        self.setImageCanvas(image)
 
 
 window = tk.Tk()
